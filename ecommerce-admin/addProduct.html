@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+    <head>
+         <!-- Using a local copy (Recommended for production) -->
+        <link href="./node_modules/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag/dist/css/multi-select-tag.css">
+        <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag/dist/js/multi-select-tag.js"></script>
+    </head>
+    <body class="bg-gray-800">
+        <form enctype="multipart/form-data" method="POST" id="myForm" class="space-y-3 block max-w-md rounded-lg bg-white p-6 shadow-lg mx-auto my-10">
+            <legend>Add a new product</legend>
+            <input type="text" placeholder="Product name" name="name"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+            <input type="text" placeholder="Price" name="price"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+            <textarea name="description"  rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Product description..."></textarea>
+            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="images">Upload Product images</label>
+            <input id="images" type="file" name="images[]" multiple  class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none">
+            <input type="text" placeholder="Average Rating" name="averageRating"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+            <input type="text" placeholder="Delivery cost" name="deliveryCost"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+            <label for="categorie" class="block mb-2 text-sm font-medium text-gray-900">Select the categorie</label>
+            <select id="categorie" name="categorie"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                <option value="Pantalons">Pantalons</option>
+                <option value="Chaussures">Chaussures</option>
+                <option value="Accessoires">Accessoires</option>
+                <option value="PULLS">PULLS</option>
+                <option value="Chemises">Chemises</option>
+            </select> 
+            <label for="sub-categorie" class="block mb-2 text-sm font-medium text-gray-900">Select the sub categorie</label>
+            <select id="sub-categorie" name="subCategorie" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                <option value=""></option>
+                <option value="Lunettes">Lunettes</option>
+                <option value="Montres">Montres</option>
+                <option value="Baskets">Baskets</option>
+                <option value="Boots">Boots</option>
+                <option value="Mocassins">Mocassins</option>
+                <option value="Jeans">Jeans</option>
+                <option value="Joggers">Joggers</option>
+                <option value="Pulls">Pulls</option>
+                <option value="T-shirts">T-shirts</option>
+                <option value="Sweats">Sweats</option>
+            </select> 
+            <label for="colors" class="block mb-2 text-sm font-medium text-gray-900">Select the colors</label>
+            <select id="colors" multiple name="colors[]" >
+                <option value="Black">Black</option>
+                <option value="White">White</option>
+                <option value="Pink">Pink</option>
+                <option value="Red">Red</option>
+                <option value="Blue">Blue</option>
+                <option value="Gray">Gray</option>
+                <option value="Purple">Purple</option>
+                <option value="Orange">Orange</option>
+                <option value="Orange">Beige</option>
+            </select>
+            <label for="sizes" class="block mb-2 text-sm font-medium text-gray-900">Select the sizes</label>          
+            <select id="sizes" multiple name="sizes[]" >
+                <option value="VAR">VAR</option>
+                <option value="44">44</option>
+                <option value="43">43</option>
+                <option value="42">42</option>
+                <option value="41">41</option>
+                <option value="40">40</option>
+                <option value="39">39</option>
+                <option value="38">38</option>
+                <option value="37">37</option>
+                <option value="36">36</option>
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+            </select>            
+            <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">add</button>
+        </form>
+    
+        <script>
+            new MultiSelectTag('colors')  // id
+            new MultiSelectTag('sizes')  // id
+
+            document.getElementById('myForm').addEventListener('submit', function (e) {
+                e.preventDefault(); // Prevent the default form submission
+
+                const formData = new FormData(document.querySelector('#myForm'));
+                const url = 'http://localhost:3000/addProduct'; // Change this to your API endpoint
+
+                fetch(url, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'accept': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('API Response:', data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            });
+
+        </script>
+    </body>
+</html>
